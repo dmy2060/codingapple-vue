@@ -1,20 +1,29 @@
 <template>
   <div>
-    
-    <!-- 모달 -->
-    <Modal/>
+
+    <div class="black-bg" v-if="modal == true">
+      <div class="white-bg">
+        <h4>상세페이지임</h4>
+        <p>상세페이지 내용임</p>
+        <button @click="modal = false">닫기</button>
+      </div>
+    </div>
 
     <div class="menu">
       <!-- <a v-for="작명 in 3" :key="작명">Home</a> -->
       <a v-for="작명 in menus" :key="작명">{{ 작명 }}</a>
     </div>
 
-    <!-- 배너 -->
-    <Discount/>
+     <!-- <div>
+      <img :src="rooms[0].image" class="room-img"/>
+      <h4 @click="modal = true">{{ rooms[0].title }}</h4>
+      <p>{{ rooms[0].price }} 만원</p>
+    </div>
+     -->
 
     <div v-for="(room, i) in rooms" :key="i">
       <img :src="room.image" class="room-img"/>
-      <h4 @click="modal = true; modalclick = i">{{ room.title }}</h4>
+      <h4 @click="modal = true">{{ room.title }}</h4>
       <p>{{ room.price }} 만원</p>
     </div>
     
@@ -25,15 +34,13 @@
 <script>
 
 import data from './post.js'
-import Discount from './components/Discount.vue'
-import Modal from './components/Modal.vue'
+console.log(data)
 
 export default {
   name: 'App',
   data() {
     return {
       // number : 0,
-      modalclick: 0,
       rooms : data,
       numbers :[0, 0, 0],
       menus: ['Home', 'Shop', 'About'],
@@ -48,9 +55,7 @@ export default {
     // }
   },
   components: {
-    // Discount : Discount,
-    Discount, // key와 value가 똑같을 경우 한글자로 축약 가능
-    Modal
+    
   },
 }
 </script>
@@ -63,7 +68,20 @@ body {
 div {
   box-sizing: border-box;
 }
-
+.black-bg {
+  width:100%;
+  height:100%;
+  background:rgba(0, 0, 0, 0.5);
+  position:fixed;
+  padding:20px;
+}
+.white-bg {
+  width:100%;
+  background-color: #fff;
+  padding:20px;
+  border-radius: 8px;
+  
+}
 .room-img {
   width:100%;
   margin-top:40px;
@@ -89,25 +107,19 @@ div {
 }
 
 
-
 </style>
 
 
-<!-- 7강 component -->
+<!-- 5강 export, import  -->
 <!-- 
-    1. vue 파일 먼저 만들기
-    2. 축약할 HTML 넣기 (뷰 기본 템플릿에 넣기, tempelet script(export) style)
-    3. import 하기
-    4. component: {} 오브젝트에 넣어야함!
-    -> <Discount/> 
-       <Discount></Discount>
-       두가지 방법이 있음
+    1. var apple = 10;
+       var apple2 = 100;
+      export default apple;
+      변수 다른데서 사용하려면 변수를 export
+      -> import 변수명(자유롭게 작명 가능) from '경로' 하면 export된 함수 사용가능
 
-    why?
-    - 코드가 한줄로 축약이 가능해서 코드가 아름다운
-    - 반복해서 재사용 해야 할 경우 재사용이 쉬움
-    - 갑자기 UI를 다 바꿔야 할 경우 컴포넌트만 바꾸면 됨
-    !!! 온갖거 다 컴포넌트로 만들면 안됨, 반복적으로 출현할때만 만드는게 좋음
-    데이터바인딩할 때 귀찮은 일이 발생할 수 있음
-
+    2. var apple = 10;
+       var apple2 = 100;
+       export {apple, apple2}
+       -> import {apple, apple2} from '경로' 하면 export된 함수 사용가능
 -->

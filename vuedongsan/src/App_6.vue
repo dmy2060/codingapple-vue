@@ -1,16 +1,34 @@
 <template>
   <div>
+
+    <div v-if="1 == 2">
+      안녕하세요
+    </div>
+    <!-- if문 여러개 쓰고 싶을때! -->
+    <div v-else-if="1==3">
+      안녕하세요2
+    </div>
+    <!-- if문이 참이 아니면 이거 실행해주세요! -->
+    <div v-else>
+      안녕하세요3
+    </div>
+
     
-    <!-- 모달 -->
-    <Modal/>
+    <div class="black-bg" v-if="modal == true">
+      <div class="white-bg">
+        <!-- <h4>{{ rooms[사용자가누른상품번호].title }}</h4> -->
+        <h4>{{ rooms[modalclick].title }}</h4>
+        <img :src="rooms[modalclick].image" class="room-img"/>
+        <p>{{rooms[modalclick].content}}</p>
+        <p>{{rooms[modalclick].price}}</p>
+        <button @click="modal = false">닫기</button>
+      </div>
+    </div>
 
     <div class="menu">
       <!-- <a v-for="작명 in 3" :key="작명">Home</a> -->
       <a v-for="작명 in menus" :key="작명">{{ 작명 }}</a>
     </div>
-
-    <!-- 배너 -->
-    <Discount/>
 
     <div v-for="(room, i) in rooms" :key="i">
       <img :src="room.image" class="room-img"/>
@@ -25,8 +43,7 @@
 <script>
 
 import data from './post.js'
-import Discount from './components/Discount.vue'
-import Modal from './components/Modal.vue'
+console.log(data)
 
 export default {
   name: 'App',
@@ -48,9 +65,7 @@ export default {
     // }
   },
   components: {
-    // Discount : Discount,
-    Discount, // key와 value가 똑같을 경우 한글자로 축약 가능
-    Modal
+    
   },
 }
 </script>
@@ -63,7 +78,20 @@ body {
 div {
   box-sizing: border-box;
 }
-
+.black-bg {
+  width:100%;
+  height:100%;
+  background:rgba(0, 0, 0, 0.5);
+  position:fixed;
+  padding:20px;
+}
+.white-bg {
+  width:100%;
+  background-color: #fff;
+  padding:20px;
+  border-radius: 8px;
+  
+}
 .room-img {
   width:100%;
   margin-top:40px;
@@ -89,25 +117,22 @@ div {
 }
 
 
-
 </style>
 
 
-<!-- 7강 component -->
+<!-- 6강 product details -->
 <!-- 
-    1. vue 파일 먼저 만들기
-    2. 축약할 HTML 넣기 (뷰 기본 템플릿에 넣기, tempelet script(export) style)
-    3. import 하기
-    4. component: {} 오브젝트에 넣어야함!
-    -> <Discount/> 
-       <Discount></Discount>
-       두가지 방법이 있음
+    1. v-if 문법 더 알아야할 내용
 
-    why?
-    - 코드가 한줄로 축약이 가능해서 코드가 아름다운
-    - 반복해서 재사용 해야 할 경우 재사용이 쉬움
-    - 갑자기 UI를 다 바꿔야 할 경우 컴포넌트만 바꾸면 됨
-    !!! 온갖거 다 컴포넌트로 만들면 안됨, 반복적으로 출현할때만 만드는게 좋음
-    데이터바인딩할 때 귀찮은 일이 발생할 수 있음
-
+    <div v-if="1 == 2">
+      안녕하세요
+    </div>
+    -> if문 여러개 쓰고 싶을때!
+    <div v-else-if="1==3">
+      안녕하세요2
+    </div>
+    -> if문이 참이 아니면 이거 실행해주세요!
+    <div v-else>
+      안녕하세요3
+    </div>
 -->
