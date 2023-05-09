@@ -2,7 +2,7 @@
   <div>
     
     <!-- 모달 -->
-    <Modal  @closeModal="modal = false" :rooms="rooms" :modalclick="modalclick" :modal="modal"/>
+    <Modal :rooms="rooms" :modalclick="modalclick" :modal="modal"/>
 
     <div class="menu">
       <!-- <a v-for="작명 in 3" :key="작명">Home</a> -->
@@ -12,8 +12,7 @@
     <!-- 배너 -->
     <Discount :작명="데이터이름" />
 
-    <!-- $event 안해도 i로 전달해도됨 -->
-    <Card @openModal="modal = true; modalclick=$event" v-for="(room, i) in rooms" :key="i" :room="room"/>
+    <Card v-for="(room, i) in rooms" :key="i" :room="room"/>
     
   
   </div>
@@ -93,11 +92,13 @@ div {
 </style>
 
 
-<!-- 11강 watcher로 데이터 감시하기 -->
+<!-- 9강 props2 -->
 <!-- 
-   1. 감시하고 싶은데이터 있는 경우, watch : {} 만들면 됨
-   2. 함수로 만들면 됨 watch: {감시할데이터이름(){}} !! 무조건 감시할 데이터 이름을 적어줘야함
-      -> 감시할 데이터가 변할때마다 watcher도 실행됨
-      -> 함수 파라미터는 데이터를 뜻함
-      -> 파라미터는 두 개ㅈ까지 작성 가능함, (a, b) a는 변경 후 데이터, b는 변경 전 데이터
+   1. props 보낼 때 다양한 자료형 입력가능 :작명="Array,Object"
+   <Discount :작명="데이터이름" /> or <Discount :작명="[123,456]" />
+   -> 간단한 자료 보내는 경우 : 생략가능 <Discount 작명="안녕하세요"/>
+   -> 작명="문자자료", :작명="숫자자료"
+   2. object.name, object.age 각각 props로 전송하려면
+   <Discount v-bind="object" 쓰거나 :이름="object.name" :나이="object.age" 쓰면됨/>
+   -> 보통 잘 쓰지는 않음
 -->
