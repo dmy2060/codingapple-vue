@@ -17,7 +17,7 @@
     </div>
 
     <!-- 배너 -->
-    <Discount :count="count" v-if="showDiscount == true"/>
+    <Discount/>
 
     <button @click="priceSort">가격순정렬</button>
     <button @click="printSort1">가격낮은순정렬</button>
@@ -54,8 +54,7 @@ export default {
       products : ['역삼동원룸', '천호동원룸', '마포구원룸'],
       modal : false,
       object : {name:'kim', age:20},
-      showDiscount: true,
-      count: 30,
+
     }
   },
   methods : {
@@ -86,22 +85,6 @@ export default {
           return 0;
       })
     }
-  },
-  // mounted() {
-  //   setTimeout(()=>{
-  //     this.showDiscount = false;
-  //   }, 2000)
-  // },
-
-  mounted(){
-    let counted = setInterval(()=>{
-      this.count -= 1;
-      if(this.count == 0) {
-        this.showDiscount = false;
-        clearInterval(counted);
-      }
-    }, 1000)
-    
   },
   components: {
     // Discount : Discount,
@@ -175,22 +158,35 @@ div {
 </style>
 
 
-<!-- 14강 라이프사이클 훅 -->
+<!-- 13강 상품정렬기능과 데이터 원본 보존 -->
 <!-- 
-   1. 컴포넌트는 웹페이지에 표시되기까지 일련의 step을 거침
-      그 step을 라이프사이클이라고 함
-   2. (1). create -> 데이터만 있는 단계
-   3. (2). mount -> template 사이에 있던걸 실제 html로 바꿔줌   
-   4. (3). 컴포넌트 생성 -> index.html에 장착  
-   5. (4). update -> data가 변하면 component가 재렌더링됨.
-   6. (5). unmount -> 컴포넌트가 삭제되는 단계
-   -> 라이프사이클 훅을 이용해서 원하는 시점에 코드를 실행 시킬 수 있음.
-   -> mounted() {}, 원하는 훅을 methods 이런곳 다음에 그냥 훅을 쓰면 됨.
-      * setTimeout(()=>{}) 함수 사용할때는 그냥 함수말고 화살표함수 사용하는게 좋음
-        : 화살표 함수는 바깥에 있는 this를 제대로 가져다 쓸 수 있음.
-        : 안에서 this 사용하려면 화살표 함수 사용해야 에러 안나고 사용 가능!
-   -> 모든 컴포넌트에 훅을 보낼 수 있음 modal.vue에 적으면 modal.vue가 
-      마운트 되고 난 다음에 실행
-   -> 서버에서 데이터 가져올 때도 라이프사이클 훅안에서 코드를 짬
-      :created()나 mounted() 둘 중 하나 선택해서 사용
+   1. 생 자바스크립트라면 rooms 데이터를 정렬하고 HTML에 반영해주세요지만
+      뷰의 경우 실시간 자동렌더링됨으로 데이터만 정렬해주면 됨
+      * sort 문법 
+      : 기본적으로 가나다순 정렬, 숫자 정렬하려면 (function(a,b) { return a - b })
+        var array = [3,5,2];
+        // 기본 가나다순 정렬
+        //  array.sort();
+        //  console.log(array);
+
+        // 숫자 정렬
+        // a외 b는 하나하나의 데이터 3과 5를 비교해서 return 값이 음수라면 a를 왼쪽으로~ 
+        array.sort((a,b)=>{
+          return a - b; 
+        })
+        -> sort는 원본이 변형됨
+           map, filter의 경우는 원본은 변형하지 않음
+      : object 끼리는 a - b를 뺴도 음수나 양수가 나오지 않아 sort가 불가함
+        비교하고 싶은 항목을 빼야함
+        -> a.price - b.price
+      
+    2. 되돌리기 버튼 만들기
+      : 보존할 원본 데이터를 하나 더 만들어서 되돌리기 누르면 원본데이터가 들어가게 만들면됨
+        단, 같은 데이터를 그냥 넣어버리면 사본이 아니라 같은데이터 뜻하는거밖에 되지 않음
+        -> 각각 별개의 사본을 만드려면 [...array자료]
+        !!! 이렇게 했을 경우 여러번 왔다갔다하면 둘 다 array이기 때문에
+            등호로 array를 집어넣으면 왼쪽 오른쪽 값을 공유해달라 라는 뜻으로
+            결국 두 개가 똑같아져서 에러가 생김
+        해결! 등호로 끼워넣을때 끼워넣을 array도 [...array자료형]으로 만들어서 넣어야함!
+        
 -->

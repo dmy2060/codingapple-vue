@@ -34,6 +34,18 @@ watch : {
     }
   },
 },
+beforeUpdate(){
+  if(this.month == 2) {
+    alert('No')
+    this.month = 1;
+  }
+},
+// updated(){
+//   if(this.month == 2) {
+//     alert('No')
+//     this.month = 1;
+//   }
+// },
 props : {
     rooms : Array,
     modal : Boolean,
