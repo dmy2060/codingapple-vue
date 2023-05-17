@@ -1,8 +1,6 @@
 <template>
   <div>
-    <Post/>
-    <!-- <Post/>
-    <Post/> -->
+    <Post v-for="(datas, i) in data" :key="i" :data="datas"/>
   </div>
 </template>
 
@@ -10,9 +8,9 @@
 import Post from './Posts.vue'
 export default {
   name: 'containerWrap',
-  // props: {
-  //   datalist:Array
-  // },
+  props: {
+    data:Array
+  },
   components: {
     Post
   }

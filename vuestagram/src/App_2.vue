@@ -9,7 +9,7 @@
     <img src="./assets/logo.png" class="logo" />
   </div>
 
-  <Container/>
+  <Container :data="data"/>
   <div class="footer">
     <ul class="footer-button-plus">
       <input type="file" id="file" class="inputfile" />
@@ -19,14 +19,16 @@
 </template>
 
 <script>
-// import postdata from './assets/postdata'
+import postdata from './assets/postdata'
 import Container from './components/Container.vue'
 
 export default {
   name: 'App',
-  // data() {
-  //   datalistdkdk : postdata
-  // },
+  data(){
+    return {
+      data: postdata
+    }
+  },
   components: {
     Container
   }
@@ -113,3 +115,8 @@ ul {
 
 </style>
 <!-- 2강 인스타그램 클론 코딩 -->
+<!-- 
+    1. 이미지 넣으려면
+      <div class="post-body" :style="{ backgroundImage:`url(${data.postImage})` }"></div>
+      이런식으로 넣어주면 됨
+-->
