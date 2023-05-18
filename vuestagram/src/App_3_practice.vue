@@ -129,8 +129,27 @@ ul {
 }
 
 </style>
-<!-- 4강 탭 만들기 & 탭으로 사진 업로드 페이지 만들기-->
+<!-- 3강 ajax로 더보기 버튼 만들기 -->
 <!--
-    1. 
+    1. ajax
+       - get or post 요청하면 브라우저가 새로고침됨
+       - <form></form> 쓰면  get or post 요청 가능
+      (1). get 요청
+        서버가 정해놓은 url 잘 적어서 요청하는 것
+        -> 데이터를 서버에서 가져올 때
+      (2). post 요청
+        -> 서버로 데이터를 보낼 때
+    2. ajax 쓰면 새로고침 없이도 get post 요청 가능
+      -> ajax 요청하려면
+      (1). axios 라이브러리 사용
+         -> npm install axios
+      (2). 기본 fetch 함수 사용
+         -> 매우 최신 브라우저에서만 이용이 가능함
+         -> 호환성 때문에 axios를 더 많이 사용
+    3. axios 사용법
+    - import axios from 'axios'
+    - 필요한곳에 axios.get(), post()
+    -> axios.post('url', {name:'kim'}).then().catch((error)=>{})
+       이런식으로 전달을 할 수 있음
 
 -->

@@ -146,6 +146,7 @@ ul {
     3. axios 사용법
     - import axios from 'axios'
     - 필요한곳에 axios.get(), post()
-
+    -> axios.post('url', {name:'kim'}).then().catch((error)=>{})
+       이런식으로 전달을 할 수 있음
 
 -->
