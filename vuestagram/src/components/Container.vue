@@ -1,26 +1,24 @@
 <template>
   <div>
     <div v-if="step == 0">
-      <Post  v-for="(datas, i) in data" :key="i" :data="datas"/>
+      <Post v-for="(datas, i) in data" :key="i" :data="datas"/>
     </div>
 
     <!-- 필터선택페이지 -->
     <div v-if="step == 1">
-      <div class="upload-image" :style="{backgroundImage : `url(${imgUrl})`}"></div>
+      <div :class="chkfilter" class="upload-image" :style="{backgroundImage : `url(${imgUrl})`}"></div>
       <div class="filters">
-        <div class="filter-1"></div>
-        <div class="filter-1"></div>
-        <div class="filter-1"></div>
-        <div class="filter-1"></div>
-        <div class="filter-1"></div>
+        <FilterBox v-for="(filter, i) in filters" :key="i" :imgUrl="imgUrl" :filter="filter">
+          <span>{{ filter }}</span>
+        </FilterBox>        
       </div>
     </div>
 
   <!-- 글작성페이지 -->
     <div v-if="step == 2">
-      <div class="upload-image"  :style="{backgroundImage : `url(${imgUrl})`}"></div>
+      <div :class="chkfilter" class="upload-image"  :style="{backgroundImage : `url(${imgUrl})`}"></div>
       <div class="write">
-        <textarea class="write-box">write!</textarea>
+        <textarea @input="$emit('write', $event.target.value)" class="write-box">write!</textarea>
       </div>
     </div>
   </div>
@@ -28,15 +26,25 @@
 
 <script>
 import Post from './Posts.vue'
+import FilterBox from './FilterBox.vue'
 export default {
   name: 'containerWrap',
+  data() {
+    return {
+      filters : [ "aden", "_1977", "brannan", "brooklyn", "clarendon", "earlybird", "gingham", "hudson", 
+"inkwell", "kelvin", "lark", "lofi", "maven", "mayfair", "moon", "nashville", "perpetua", 
+"reyes", "rise", "slumber", "stinson", "toaster", "valencia", "walden", "willow", "xpro2"],
+    }
+  },
   props: {
     data:Array,
     step:Number,
-    imgUrl:String
+    imgUrl:String,
+    chkfilter:String
   },
   components: {
-    Post
+    Post,
+    FilterBox
   }
 }
 </script>

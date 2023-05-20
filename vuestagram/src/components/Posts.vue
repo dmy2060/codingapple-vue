@@ -4,9 +4,9 @@
       <div class="profile"></div>
       <span class="profile-name">{{ data.name }}</span>
     </div>
-    <div class="post-body" :style="{ backgroundImage:`url(${data.postImage})` }"></div>
+    <div @click="$store.commit('plusLikes', 1)"  :class="data.filter" class="post-body" :style="{ backgroundImage:`url(${data.postImage})` }"></div>
     <div class="post-content">
-      <p>{{ data.likes }} Likes</p>
+      <p>{{ $store.state.likes }} Likes</p>
       <p><strong>{{ data.name }}</strong> {{ data.content }}</p>
       <p class="date">May 15</p>
     </div>

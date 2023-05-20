@@ -9,10 +9,7 @@
     </ul>
     <img src="./assets/logo.png" class="logo" />
   </div>
-<h4>안녕 {{ $store.state.name }} </h4>
-<button @click="$store.commit('이름변경')">버튼</button>
-<p> {{ $store.state.age }}</p>
-<button @click="$store.commit('plusNumber', 10)">버튼</button>
+
   <Container :chkfilter="chkfilter" :data="data" :step="step" :imgUrl="imgUrl" @write="text = $event"/>
   <button @click="more">더보기</button>
   <div class="footer">
@@ -168,20 +165,24 @@ ul {
 }
 
 </style>
-<!-- 11강 vuex2 수정하는 방법-->
+<!-- 9강 필터 박스 클릭시 기능을 만들어보자 -->
 <!--
-    1. 예를 들면 버튼 클릭하면 바꾸는게 아닌 바꿔달라고 store.js에 부탁을 함
-       {1}. store.js에 state 수정방법 정의
-       -> 아래와 같이 state에 다 정의를 해놓음
-       mutations:{
-        이름변경(state) {state.name = 'park'}
-       }
-       (2). 수정하고 싶으면 store.js에 부탁
-       -> 아래와 같이 부탁하면 됨
-       @click="$store.commit('이름변경')"
-       ==> store.js에서만 변경이 가능하기 때문에 state 이상하면 store.js만 뒤져도 됨.
-         디버깅 시간 단축.
-    
-       
-    }
+    1. app.vue까지 데이터를 전달
+    상위 컴포넌트로는 custom event 가능하나, 상위 컴포넌트가 여러개일 경우 여러번 사용해야함
+    -> mitt 사용하면 원하는데로 전송 가능
+    !! import 시 ./ 없고 라이브러리이면 이름만 적음
+    2. mitt 라이브러리 셋팅
+    -> main.js
+    import mitt from 'mitt'
+    let emitter = mitt();
+    let app = createApp(App);
+    app.config.globalProperties.emitter = emitter;
+    => app.config.globalProperties = 글로벌한 변수보관함임
+    => 자수쓰는 라이브러리가 있으면 main.js에서 config.global~~ 로 선언하면
+       import 해올 필요 없이 this.~~로 사용이 가능함!
+    3. mitt로 데이터전송하는법
+    (1). 발사하고 this.emitter.emit("작명", "데이터")
+    (2). 수신하면 됨 this.emitter.on("작명", (a)=>{}) => mounted()안에 넣어주는게 관습적임
+         => a는 이벤트 발사할 때 들어있던 데이터
+         => 작명은 유니크하게! 단, 많이 쓰면 관리가 힘들어짐! 차라리 vuex 사용하는게 더 좋음
 -->

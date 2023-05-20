@@ -9,11 +9,8 @@
     </ul>
     <img src="./assets/logo.png" class="logo" />
   </div>
-<h4>안녕 {{ $store.state.name }} </h4>
-<button @click="$store.commit('이름변경')">버튼</button>
-<p> {{ $store.state.age }}</p>
-<button @click="$store.commit('plusNumber', 10)">버튼</button>
-  <Container :chkfilter="chkfilter" :data="data" :step="step" :imgUrl="imgUrl" @write="text = $event"/>
+
+  <Container :data="data" :step="step" :imgUrl="imgUrl" @write="text = $event"/>
   <button @click="more">더보기</button>
   <div class="footer">
     <ul class="footer-button-plus">
@@ -39,15 +36,7 @@ export default {
       step:0,
       imgUrl: '',
       text:'',
-      chkfilter: '',
-
     }
-  },
-  mounted() {
-    this.emitter.on("작명", (a)=>{
-     this.chkfilter = a;
-     console.log(this.chkfilter)
-    })
   },
   components: {
     Container
@@ -62,11 +51,10 @@ export default {
         date: "May 15",
         liked: false,
         content: this.text,
-        filter: this.chkfilter
+        filter: "perpetua"
       };
       this.data.unshift(mydata);
       this.step = 0;
-      this.chkfilter = ''
     },
     more() {
       axios.get(`https://codingapple1.github.io/vue/more${this.num}.json`)
@@ -168,20 +156,30 @@ ul {
 }
 
 </style>
-<!-- 11강 vuex2 수정하는 방법-->
+<!-- 8강 slot -->
 <!--
-    1. 예를 들면 버튼 클릭하면 바꾸는게 아닌 바꿔달라고 store.js에 부탁을 함
-       {1}. store.js에 state 수정방법 정의
-       -> 아래와 같이 state에 다 정의를 해놓음
-       mutations:{
-        이름변경(state) {state.name = 'park'}
-       }
-       (2). 수정하고 싶으면 store.js에 부탁
-       -> 아래와 같이 부탁하면 됨
-       @click="$store.commit('이름변경')"
-       ==> store.js에서만 변경이 가능하기 때문에 state 이상하면 store.js만 뒤져도 됨.
-         디버깅 시간 단축.
-    
-       
-    }
+    1. 사진위에 필터명 표기하면서 배우기
+    slot으로 부모 -> 자식 데이터 전송이 가능(props보다 좀 더 직관적)
+    -> 사용법
+       (1). 자식에 구멍 뚫기
+       (2). <컴포넌트> </컴포넌트> 태그사이에 데이터넣기
+    2. slot은 태그안에 데이터바인딩할 때만 사용가능
+    -> 속성 같은데에서는 slot으로 사용 불가
+    3. slot 여러개 사용하는 법
+    - 자식
+    -> <slot name="a"></slot>
+    -> <slot name="b"></slot>
+    - 부모
+    -> <template v-slot:a> 데이터1 </template>
+    -> <template v-slot:b> 데이터2 </template>
+    ==> 이런개 반복되다 보면 복잡해짐, 여러개가 필요할 경우는 props가 더 나음.
+    4. slot 장점
+    -> 간단하게 전송이 가능, html도 전송이 가능
+    !! 5. 참고 slot props
+    -> slot 사용할 때 자식데이터 필요한 경우
+    <slot :자식데이터="자식데이터"></slot>
+    => 부모 사용 가능!
+    -> 부모는 {{자식데이터}} 로 사용 가능!
+    단, 부모에 <template v-slot:default="작명">{{작명.자식데이터}}</template>
+
 -->

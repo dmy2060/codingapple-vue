@@ -9,11 +9,8 @@
     </ul>
     <img src="./assets/logo.png" class="logo" />
   </div>
-<h4>안녕 {{ $store.state.name }} </h4>
-<button @click="$store.commit('이름변경')">버튼</button>
-<p> {{ $store.state.age }}</p>
-<button @click="$store.commit('plusNumber', 10)">버튼</button>
-  <Container :chkfilter="chkfilter" :data="data" :step="step" :imgUrl="imgUrl" @write="text = $event"/>
+
+  <Container :data="data" :step="step" :imgUrl="imgUrl" @write="text = $event"/>
   <button @click="more">더보기</button>
   <div class="footer">
     <ul class="footer-button-plus">
@@ -39,15 +36,7 @@ export default {
       step:0,
       imgUrl: '',
       text:'',
-      chkfilter: '',
-
     }
-  },
-  mounted() {
-    this.emitter.on("작명", (a)=>{
-     this.chkfilter = a;
-     console.log(this.chkfilter)
-    })
   },
   components: {
     Container
@@ -62,11 +51,10 @@ export default {
         date: "May 15",
         liked: false,
         content: this.text,
-        filter: this.chkfilter
+        filter: "perpetua"
       };
       this.data.unshift(mydata);
       this.step = 0;
-      this.chkfilter = ''
     },
     more() {
       axios.get(`https://codingapple1.github.io/vue/more${this.num}.json`)
@@ -168,20 +156,8 @@ ul {
 }
 
 </style>
-<!-- 11강 vuex2 수정하는 방법-->
+<!-- 7강 cssgram -->
 <!--
-    1. 예를 들면 버튼 클릭하면 바꾸는게 아닌 바꿔달라고 store.js에 부탁을 함
-       {1}. store.js에 state 수정방법 정의
-       -> 아래와 같이 state에 다 정의를 해놓음
-       mutations:{
-        이름변경(state) {state.name = 'park'}
-       }
-       (2). 수정하고 싶으면 store.js에 부탁
-       -> 아래와 같이 부탁하면 됨
-       @click="$store.commit('이름변경')"
-       ==> store.js에서만 변경이 가능하기 때문에 state 이상하면 store.js만 뒤져도 됨.
-         디버깅 시간 단축.
-    
-       
-    }
+    1. cssgram.css 파일 첨부하면 인스타그램 필터기능 완성
+       => <img class="인스타필터명"> 그럼 이뻐짐
 -->

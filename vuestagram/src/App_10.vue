@@ -10,9 +10,7 @@
     <img src="./assets/logo.png" class="logo" />
   </div>
 <h4>안녕 {{ $store.state.name }} </h4>
-<button @click="$store.commit('이름변경')">버튼</button>
-<p> {{ $store.state.age }}</p>
-<button @click="$store.commit('plusNumber', 10)">버튼</button>
+<button @click="$store.state.name = '박'">버튼</button>
   <Container :chkfilter="chkfilter" :data="data" :step="step" :imgUrl="imgUrl" @write="text = $event"/>
   <button @click="more">더보기</button>
   <div class="footer">
@@ -168,20 +166,34 @@ ul {
 }
 
 </style>
-<!-- 11강 vuex2 수정하는 방법-->
+<!-- 10강 vuex 사용하는 이유 -->
 <!--
-    1. 예를 들면 버튼 클릭하면 바꾸는게 아닌 바꿔달라고 store.js에 부탁을 함
-       {1}. store.js에 state 수정방법 정의
-       -> 아래와 같이 state에 다 정의를 해놓음
-       mutations:{
-        이름변경(state) {state.name = 'park'}
-       }
-       (2). 수정하고 싶으면 store.js에 부탁
-       -> 아래와 같이 부탁하면 됨
-       @click="$store.commit('이름변경')"
-       ==> store.js에서만 변경이 가능하기 때문에 state 이상하면 store.js만 뒤져도 됨.
-         디버깅 시간 단축.
-    
-       
-    }
+    1. 데이터 주고받기 어려움
+       - 하위컴포넌트 전송은 props
+       - 상위컴포넌트 전송은 custom event 아니면 mitt
+    ==> vuex를 사용해서 데이터들을 다 몰아넣음
+        모든 컴포넌트가 직접 꺼내서 사용할 수 있음
+        단, 코드가 좀 많이 길어질 수 있음
+        컴포넌트가 많은 플젝에서 사용하는게 좋음
+    2. vuex 4 셋팅
+       - store.js 파일 만듬
+       - import { createStore } from 'vuex'
+        const store = createStore({
+            state() {
+                return {
+
+                }
+            }
+        })
+        export default store;
+        - main.js
+          import store from './store.js'
+          app.use(store).mount('#app')
+    3. <h4>안녕 {{ $store.state.name }} </h4> 
+       단, vuex 국룰 => 컴포넌트 안에서 직접 수정하기 금지!
+       컴포넌트가 많을 경우 어디서 수정된지 모름!!
+
+    4. state 수정하고 싶으면
+       (1). 미리 store.js에서 수정방법을 정의해두고
+       (2). 그 방법을 컴포넌트에서 소환해서 수정해야함
 -->
